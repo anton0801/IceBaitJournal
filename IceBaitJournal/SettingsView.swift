@@ -3,6 +3,7 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var dataManager: DataManager
     @AppStorage("useMeters") var useMeters: Bool = true
+    @AppStorage("darkMode") var darkMode: Bool = false
     @State private var showingResetAlert = false
     @State private var showingExportSheet = false
     @State private var csvURL: URL?
@@ -11,6 +12,7 @@ struct SettingsView: View {
         NavigationView {
             List {
                 Toggle("Units: \(useMeters ? "Meters" : "Feet")", isOn: $useMeters)
+                Toggle("Dark Mode", isOn: $darkMode)
                 
                 Button("Reset Journal") {
                     showingResetAlert = true
@@ -25,13 +27,7 @@ struct SettingsView: View {
                     Text("Ice Bait Journal v1.0\nDeveloped for ice fishing enthusiasts.")
                         .padding()
                 }
-                
-//                Button("Export Journal as CSV") {
-//                    csvURL = generateCSVFile()
-//                    if csvURL != nil {
-//                        showingExportSheet = true
-//                    }
-//                }
+
             }
             .background(LinearGradient(gradient: Gradient(colors: [.iceWhite, .lightIceBlue]), startPoint: .top, endPoint: .bottom))
             .navigationTitle("Settings")

@@ -17,6 +17,11 @@ struct MainView: View {
                         Label("Baits", systemImage: "fish")
                     }
                 
+                CalendarView()
+                    .tabItem {
+                        Label("Calendar", systemImage: "calendar")
+                    }
+                
                 StatsView()
                     .tabItem {
                         Label("Stats", systemImage: "chart.bar")

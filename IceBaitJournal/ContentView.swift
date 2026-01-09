@@ -10,11 +10,13 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             if showSplash {
-                SplashView {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        showSplash = false
-                        if firstLaunch {
-                            showOnboarding = true
+                SplashView().onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            showSplash = false
+                            if firstLaunch {
+                                showOnboarding = true
+                            }
                         }
                     }
                 }
@@ -52,8 +54,9 @@ struct CardView: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(Color.iceWhite)
-        .cornerRadius(12)
-        .shadow(color: .silverAccent, radius: 5, x: 0, y: 2)
+        .background(.ultraThinMaterial)
+        .cornerRadius(16)
+        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.silverAccent, lineWidth: 0.5))
+        .shadow(color: .silverAccent.opacity(0.3), radius: 10)
     }
 }

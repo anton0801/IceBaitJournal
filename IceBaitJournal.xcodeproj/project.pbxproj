@@ -6,33 +6,112 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8FC43DBC2F0D61C3005983DC /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = 8FC43DBB2F0D61C3005983DC /* AppsFlyerLib */; };
+		8FC43DE72F0D6C9F005983DC /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8FC43DE62F0D6C9F005983DC /* FirebaseMessaging */; };
+		8FC43F2C2F0DB348005983DC /* NoticiationApplicationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8FC43F252F0DB347005983DC /* NoticiationApplicationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8FC43F342F0DB354005983DC /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8FC43F332F0DB354005983DC /* FirebaseMessaging */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8FC43F2A2F0DB348005983DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8FD3748A2EF1DC76009D7590 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8FC43F242F0DB347005983DC;
+			remoteInfo = NoticiationApplicationServiceExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8FC43F312F0DB348005983DC /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8FC43F2C2F0DB348005983DC /* NoticiationApplicationServiceExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		8FC43F252F0DB347005983DC /* NoticiationApplicationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NoticiationApplicationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FD374922EF1DC76009D7590 /* IceBaitJournal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IceBaitJournal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8FC43EA32F0DA713005983DC /* Exceptions for "IceBaitJournal" folder in "IceBaitJournal" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8FD374912EF1DC76009D7590 /* IceBaitJournal */;
+		};
+		8FC43F302F0DB348005983DC /* Exceptions for "NoticiationApplicationServiceExtension" folder in "NoticiationApplicationServiceExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8FC43F242F0DB347005983DC /* NoticiationApplicationServiceExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		8FC43F262F0DB348005983DC /* NoticiationApplicationServiceExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8FC43F302F0DB348005983DC /* Exceptions for "NoticiationApplicationServiceExtension" folder in "NoticiationApplicationServiceExtension" target */,
+			);
+			path = NoticiationApplicationServiceExtension;
+			sourceTree = "<group>";
+		};
 		8FD374942EF1DC76009D7590 /* IceBaitJournal */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8FC43EA32F0DA713005983DC /* Exceptions for "IceBaitJournal" folder in "IceBaitJournal" target */,
+			);
 			path = IceBaitJournal;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8FC43F222F0DB347005983DC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8FC43F342F0DB354005983DC /* FirebaseMessaging in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8FD3748F2EF1DC76009D7590 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FC43DE72F0D6C9F005983DC /* FirebaseMessaging in Frameworks */,
+				8FC43DBC2F0D61C3005983DC /* AppsFlyerLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8FC43F322F0DB354005983DC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8FD374892EF1DC76009D7590 = {
 			isa = PBXGroup;
 			children = (
 				8FD374942EF1DC76009D7590 /* IceBaitJournal */,
+				8FC43F262F0DB348005983DC /* NoticiationApplicationServiceExtension */,
+				8FC43F322F0DB354005983DC /* Frameworks */,
 				8FD374932EF1DC76009D7590 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				8FD374922EF1DC76009D7590 /* IceBaitJournal.app */,
+				8FC43F252F0DB347005983DC /* NoticiationApplicationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +128,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8FC43F242F0DB347005983DC /* NoticiationApplicationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8FC43F2D2F0DB348005983DC /* Build configuration list for PBXNativeTarget "NoticiationApplicationServiceExtension" */;
+			buildPhases = (
+				8FC43F212F0DB347005983DC /* Sources */,
+				8FC43F222F0DB347005983DC /* Frameworks */,
+				8FC43F232F0DB347005983DC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				8FC43F262F0DB348005983DC /* NoticiationApplicationServiceExtension */,
+			);
+			name = NoticiationApplicationServiceExtension;
+			packageProductDependencies = (
+				8FC43F332F0DB354005983DC /* FirebaseMessaging */,
+			);
+			productName = NoticiationApplicationServiceExtension;
+			productReference = 8FC43F252F0DB347005983DC /* NoticiationApplicationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		8FD374912EF1DC76009D7590 /* IceBaitJournal */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8FD3749E2EF1DC78009D7590 /* Build configuration list for PBXNativeTarget "IceBaitJournal" */;
@@ -55,16 +158,20 @@
 				8FD3748E2EF1DC76009D7590 /* Sources */,
 				8FD3748F2EF1DC76009D7590 /* Frameworks */,
 				8FD374902EF1DC76009D7590 /* Resources */,
+				8FC43F312F0DB348005983DC /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8FC43F2B2F0DB348005983DC /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				8FD374942EF1DC76009D7590 /* IceBaitJournal */,
 			);
 			name = IceBaitJournal;
 			packageProductDependencies = (
+				8FC43DBB2F0D61C3005983DC /* AppsFlyerLib */,
+				8FC43DE62F0D6C9F005983DC /* FirebaseMessaging */,
 			);
 			productName = IceBaitJournal;
 			productReference = 8FD374922EF1DC76009D7590 /* IceBaitJournal.app */;
@@ -80,6 +187,9 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					8FC43F242F0DB347005983DC = {
+						CreatedOnToolsVersion = 16.4;
+					};
 					8FD374912EF1DC76009D7590 = {
 						CreatedOnToolsVersion = 16.4;
 					};
@@ -94,17 +204,29 @@
 			);
 			mainGroup = 8FD374892EF1DC76009D7590;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				8FC43DBA2F0D61C3005983DC /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
+				8FC43DE52F0D6C9F005983DC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8FD374932EF1DC76009D7590 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				8FD374912EF1DC76009D7590 /* IceBaitJournal */,
+				8FC43F242F0DB347005983DC /* NoticiationApplicationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8FC43F232F0DB347005983DC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8FD374902EF1DC76009D7590 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +237,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8FC43F212F0DB347005983DC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8FD3748E2EF1DC76009D7590 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +253,76 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8FC43F2B2F0DB348005983DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8FC43F242F0DB347005983DC /* NoticiationApplicationServiceExtension */;
+			targetProxy = 8FC43F2A2F0DB348005983DC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		8FC43F2E2F0DB348005983DC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NoticiationApplicationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NoticiationApplicationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iciingbaits.IceBaitJournal.NoticiationApplicationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		8FC43F2F2F0DB348005983DC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NoticiationApplicationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NoticiationApplicationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iciingbaits.IceBaitJournal.NoticiationApplicationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		8FD3749C2EF1DC78009D7590 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -249,8 +447,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IceBaitJournal/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Ice Bait Journal";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow to use camera in this app.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Ice Bait Journal may use limited device identifiers to support core app features, evaluate technical performance, and improve usability over time. This information is used strictly within the app for maintenance and enhancement purposes and is not used to track users across other apps, websites, or advertising networks.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -265,7 +466,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.3;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iciingbaits.IceBaitJournal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -289,8 +490,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IceBaitJournal/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Ice Bait Journal";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow to use camera in this app.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Ice Bait Journal may use limited device identifiers to support core app features, evaluate technical performance, and improve usability over time. This information is used strictly within the app for maintenance and enhancement purposes and is not used to track users across other apps, websites, or advertising networks.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -305,7 +509,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.3;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iciingbaits.IceBaitJournal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -322,6 +526,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8FC43F2D2F0DB348005983DC /* Build configuration list for PBXNativeTarget "NoticiationApplicationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8FC43F2E2F0DB348005983DC /* Debug */,
+				8FC43F2F2F0DB348005983DC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8FD3748D2EF1DC76009D7590 /* Build configuration list for PBXProject "IceBaitJournal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -341,6 +554,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8FC43DBA2F0D61C3005983DC /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.17.8;
+			};
+		};
+		8FC43DE52F0D6C9F005983DC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8FC43DBB2F0D61C3005983DC /* AppsFlyerLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8FC43DBA2F0D61C3005983DC /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
+			productName = AppsFlyerLib;
+		};
+		8FC43DE62F0D6C9F005983DC /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8FC43DE52F0D6C9F005983DC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		8FC43F332F0DB354005983DC /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8FC43DE52F0D6C9F005983DC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8FD3748A2EF1DC76009D7590 /* Project object */;
 }

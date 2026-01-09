@@ -24,6 +24,15 @@ struct BaitDetailsView: View {
         Array(Set(entries.map { $0.fishType.rawValue })).joined(separator: ", ")
     }
     
+    var photos: [UIImage] {
+        entries.compactMap { entry in
+            if let data = entry.photoData {
+                return UIImage(data: data)
+            }
+            return nil
+        }
+    }
+    
     @State private var showingDeleteAlert = false
     
     var body: some View {
@@ -37,6 +46,24 @@ struct BaitDetailsView: View {
                 CardView(title: "Total Uses", value: "\(totalUses)")
                 CardView(title: "Best Result", value: bestResult)
                 CardView(title: "Fish Caught", value: fishCaught)
+                
+                if !photos.isEmpty {
+                    Text("Photos")
+                        .font(.headline)
+                        .foregroundColor(.darkIceBlue)
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(photos, id: \.self) { image in
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 200, height: 200)
+                                    .cornerRadius(12)
+                                    .shadow(radius: 5)
+                            }
+                        }
+                    }
+                }
             }
             .padding()
         }

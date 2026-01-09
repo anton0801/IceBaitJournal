@@ -1,144 +1,296 @@
 import SwiftUI
 
 struct SplashView: View {
-    @State private var opacity: Double = 0.0
-    @State private var scale: CGFloat = 0.5
-    @State private var snowOffset: CGFloat = -UIScreen.main.bounds.height
-    var completed: () -> Void
+    
+    @StateObject private var trackerVM = JournalTrackerVM()
     
     var body: some View {
         ZStack {
-            // Cold gradient background with blur for depth
-            LinearGradient(gradient: Gradient(colors: [.deepFreeze, .frostBlue, .iceWhite]), startPoint: .bottom, endPoint: .top)
-                .ignoresSafeArea()
-                .blur(radius: 10)
-            
-            // Animated falling snowflakes for winter atmosphere
-            ForEach(0..<20) { i in
-                Image(systemName: "snowflake")
-                    .foregroundColor(.white.opacity(0.8))
-                    .font(.system(size: CGFloat.random(in: 10...30)))
-                    .offset(x: CGFloat.random(in: -150...150), y: snowOffset + CGFloat(i * 50))
-                    .rotationEffect(.degrees(Double.random(in: 0...360)))
-                    .animation(Animation.linear(duration: Double.random(in: 5...10)).repeatForever(autoreverses: false).delay(Double(i) * 0.2), value: snowOffset)
-            }
-            .onAppear {
-                withAnimation {
-                    snowOffset = UIScreen.main.bounds.height
-                }
+            if trackerVM.ongoingJournalStage == .setup || trackerVM.exposeAuthQuery {
+                SplashScreenView()
             }
             
-            // Central icon: Bait with snowflake, pulsing and scaling
-            VStack(spacing: 20) {
-                ZStack {
-                    Image(systemName: "fish")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .foregroundColor(.iceBlue)
-                        .scaleEffect(scale)
-                        .animation(Animation.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: scale)
+            if trackerVM.exposeAuthQuery {
+                PushMainAppAcceptationView()
+                    .environmentObject(trackerVM)
+            } else {
+                switch trackerVM.ongoingJournalStage {
+                case .setup:
+                    EmptyView()
                     
-                    Image(systemName: "snowflake.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50, height: 50)
-                        .foregroundColor(.white)
-                        .offset(x: 40, y: -40)
-                        .opacity(opacity)
-                        .animation(Animation.easeIn(duration: 1.0).delay(0.5), value: opacity)
+                case .running:
+                    if trackerVM.journalLocation != nil {
+                        IceBaitMainInterface()
+                    } else {
+                        ContentView()
+                    }
+                    
+                case .obsolete:
+                    ContentView()
+                    
+                case .disconnected:
+                    NoConnectionView()
                 }
-                
-                // Title with frost effect and fade-in
-                Text("Ice Bait Journal")
-                    .font(.system(size: 40, weight: .bold, design: .serif))
-                    .foregroundColor(.white)
-                    .shadow(color: .silverAccent, radius: 5)
-                    .opacity(opacity)
-                    .animation(Animation.easeIn(duration: 1.5), value: opacity)
             }
-            .onAppear {
-                opacity = 1.0
-                scale = 1.2
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    completed()
-                }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("ConversionDataReceived"))) { notice in
+            if let metrics = notice.userInfo?["conversionData"] as? [String: Any] {
+                trackerVM.processSetupMetrics(metrics)
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("deeplink_values"))) { notice in
+            if let metrics = notice.userInfo?["deeplinksData"] as? [String: Any] {
+                trackerVM.processAccessMetrics(metrics)
             }
         }
     }
 }
 
-// Enhanced Onboarding View with more content (5 pages), beautiful visuals, animations, icons, and WOW factor
+struct SplashScreenView: View {
+    @State private var opacity: Double = 0.0
+    @State private var scale: CGFloat = 0.5
+    @State private var snowOffset: CGFloat = -UIScreen.main.bounds.height
+    
+    var body: some View {
+        GeometryReader { geo in
+            let isLandscape = geo.size.width > geo.size.height
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [.deepFreeze, .frostBlue, .iceWhite]), startPoint: .bottom, endPoint: .top)
+                    .ignoresSafeArea()
+                    .blur(radius: 20)
+                
+                Image(isLandscape ? "background_second" : "background_main")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: geo.size.width, height: geo.size.height)
+                    .ignoresSafeArea()
+                    .opacity(0.8)
+                
+                if isLandscape {
+                    VStack {
+                        HStack {
+                            VStack(spacing: 0) {
+                                Image("ice_bait_logo")
+                                    .resizable()
+                                    .frame(width: geo.size.height * 0.85, height: geo.size.height * 0.8)
+                                HStack {
+                                    Image("ice_loading_icon")
+                                        .resizable()
+                                        .frame(width: 150, height: 40)
+                                    ProgressView()
+                                        .tint(.white)
+                                }
+                            }
+                            Spacer()
+                        }
+                    }
+                } else {
+                    VStack {
+                        Image("ice_bait_logo")
+                            .resizable()
+                            .frame(width: geo.size.width, height: geo.size.width)
+                            .padding(.top, 42)
+                        Spacer()
+                    }
+                }
+                
+                ForEach(0..<100) { i in
+                    Image(systemName: "snowflake")
+                        .foregroundColor(.white.opacity(0.7))
+                        .font(.system(size: CGFloat.random(in: 12...42)))
+                        .offset(x: CGFloat.random(in: -200...200), y: snowOffset + CGFloat(i * 40))
+                        .rotationEffect(.degrees(Double.random(in: 0...360)))
+                        .animation(Animation.linear(duration: Double.random(in: 6...12)).repeatForever(autoreverses: true).delay(Double(i) * 0.01), value: snowOffset)
+                }
+                .onAppear {
+                    withAnimation {
+                        snowOffset = UIScreen.main.bounds.height
+                    }
+                }
+                
+                if !isLandscape {
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Image("ice_loading_icon")
+                                .resizable()
+                                .frame(width: 150, height: 40)
+                            ProgressView()
+                                .tint(.white)
+                        }
+                        .padding(.bottom, 82)
+                    }
+                }
+            }
+            .onAppear {
+                opacity = 1.0
+                scale = 1.15
+            }
+        }
+        .ignoresSafeArea()
+    }
+}
+
+#Preview {
+    PushMainAppAcceptationView()
+}
+
+struct NoConnectionView: View {
+    
+    var body: some View {
+        GeometryReader { geo in
+            let isLandscape = geo.size.width > geo.size.height
+            ZStack {
+                Image(isLandscape ? "connect_problem_background_second" : "connect_problem_background")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: geo.size.width, height: geo.size.height)
+                    .ignoresSafeArea()
+                
+                Image("connect_problem")
+                    .resizable()
+                    .frame(width: 300, height: 250)
+                    .padding(.leading, isLandscape ? 152 : 0)
+                
+            }
+        }
+        .ignoresSafeArea()
+    }
+    
+}
+
+struct PushMainAppAcceptationView: View {
+    
+    @EnvironmentObject var viewModel: JournalTrackerVM
+    
+    var body: some View {
+        GeometryReader { geo in
+            let isLandscape = geo.size.width > geo.size.height
+            ZStack {
+                Image("main_push_background")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: geo.size.width, height: geo.size.height)
+                    .ignoresSafeArea()
+                
+                
+                VStack(spacing: 18) {
+                    Spacer()
+                    
+                    texts
+                    
+                    Button {
+                        viewModel.processAuthConfirm()
+                    } label: {
+                        Image("accept_push_button_main")
+                            .resizable()
+                            .frame(width: 350, height: 55)
+                    }
+                    
+                    Button {
+                        viewModel.processAuthBypass()
+                    } label: {
+                        Text("Skip")
+                            .foregroundColor(.white)
+                            .font(.custom("BagelFatOne-Regular", size: 14))
+                    }
+                    .padding(.bottom, isLandscape ? 12 : 72)
+                }
+                
+            }
+        }
+        .ignoresSafeArea()
+    }
+    
+    private var texts: some View {
+        VStack(spacing: 18) {
+            Text("ALLOW NOTIFICATIONS ABOUT BONUSES AND PROMOS")
+                .foregroundColor(.white)
+                .font(.custom("BagelFatOne-Regular", size: 18))
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 42)
+            
+            Text("STAY TUNED WITH BEST OFFERS FROM OUR CASINO")
+                .foregroundColor(.white)
+                .font(.custom("BagelFatOne-Regular", size: 14))
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 42)
+        }
+    }
+    
+}
+
 struct OnboardingView: View {
     var onComplete: () -> Void
     @State private var currentPage = 0
     
     let pages: [(title: String, description: String, icon: String)] = [
-        ("Welcome to Ice Bait Journal", "Your personal digital notebook for winter fishing adventures. Log every detail of your ice fishing trips with ease.", "snowflake"),
-        ("Log Your Baits & Catches", "Record bait types, names, and results. Track which lures shine on the ice and under what conditions they perform best.", "fish.circle"),
-        ("Analyze Winter Patterns", "Discover patterns in fish behavior during cold seasons. See stats on effective baits, ice conditions, and more to refine your strategy.", "chart.bar.fill"),
-        ("Build Your Fishing Insights", "Add notes on weather, depth, and activity. Over time, build a treasure trove of knowledge to boost your success on the frozen lakes.", "note.text"),
-        ("Get Started & Conquer the Ice", "Start journaling today and transform your winter fishing experience. Ready to make every trip count?", "figure.outdoor.cycle")
+        ("Welcome to Ice Bait Journal", "Your ultimate winter fishing companion. Log baits, track success, and uncover patterns in the ice.", "snowflake.circle.fill"),
+        ("Capture Every Detail", "Record baits, fish, conditions, and add photos for a vivid journal.", "camera.fill"),
+        ("Visualize Your Success", "Interactive charts reveal top baits and trends to level up your game.", "chart.bar.fill"),
+        ("Explore Chronologically", "A beautiful calendar view to relive and plan your fishing days.", "calendar"),
+        ("Search & Customize", "Quickly find entries with search, filters, and dark mode for any light.", "magnifyingglass"),
+        ("Ready to Dive In?", "Start building your ice fishing legacy today.", "figure.outdoor.cycle")
     ]
     
     var body: some View {
         ZStack {
-            // Dynamic background gradient that changes per page
-            LinearGradient(gradient: Gradient(colors: [.deepFreeze.opacity(0.8), .frostBlue, .iceWhite]), startPoint: .bottom, endPoint: .top)
+            LinearGradient(gradient: Gradient(colors: [.deepFreeze.opacity(0.85), .frostBlue, .iceWhite]), startPoint: .bottom, endPoint: .top)
                 .ignoresSafeArea()
-                .animation(.easeInOut(duration: 0.5), value: currentPage)
+                .animation(.easeInOut(duration: 0.6), value: currentPage)
             
             VStack {
                 TabView(selection: $currentPage) {
                     ForEach(0..<pages.count, id: \.self) { index in
-                        VStack(spacing: 30) {
-                            // Animated icon with rotation and scale
+                        VStack(spacing: 32) {
                             Image(systemName: pages[index].icon)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 120, height: 120)
+                                .frame(width: 130, height: 130)
                                 .foregroundColor(.iceBlue)
-                                .shadow(color: .silverAccent, radius: 10)
+                                .shadow(color: .silverAccent, radius: 12)
                                 .rotationEffect(.degrees(currentPage == index ? 360 : 0))
-                                .scaleEffect(currentPage == index ? 1.1 : 0.9)
-                                .animation(.spring(response: 0.5, dampingFraction: 0.6), value: currentPage)
+                                .scaleEffect(currentPage == index ? 1.15 : 0.95)
+                                .animation(.spring(response: 0.4, dampingFraction: 0.55), value: currentPage)
                             
-                            // Title with fade and slide
                             Text(pages[index].title)
                                 .font(.title.bold())
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal)
-                                .offset(y: currentPage == index ? 0 : 20)
+                                .offset(y: currentPage == index ? 0 : 25)
                                 .opacity(currentPage == index ? 1 : 0)
-                                .animation(.easeInOut(duration: 0.5), value: currentPage)
+                                .animation(.easeInOut(duration: 0.6), value: currentPage)
                             
-                            // Description with typing effect simulation (fade in lines)
                             Text(pages[index].description)
                                 .font(.body)
                                 .foregroundColor(.silverAccent)
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal)
                                 .opacity(currentPage == index ? 1 : 0)
-                                .animation(.easeIn(duration: 1.0).delay(0.3), value: currentPage)
+                                .animation(.easeIn(duration: 1.2).delay(0.4), value: currentPage)
                         }
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(20)
+                        .padding()
                         .tag(index)
                     }
                 }
                 .tabViewStyle(PageTabViewStyle())
-                .frame(height: 500)
+                .frame(height: 520)
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
                 
-                // Navigation buttons with glow effect
-                HStack(spacing: 20) {
+                HStack(spacing: 24) {
                     if currentPage > 0 {
                         Button("Skip") {
                             onComplete()
                         }
                         .foregroundColor(.white)
-                        .padding()
-                        .background(Capsule().fill(Color.iceBlue.opacity(0.5)))
-                        .shadow(color: .iceBlue, radius: 5)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 12)
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(30)
+                        .shadow(color: .iceBlue, radius: 6)
                     }
                     Spacer()
                     if currentPage < pages.count - 1 {
@@ -148,17 +300,21 @@ struct OnboardingView: View {
                             }
                         }
                         .foregroundColor(.white)
-                        .padding()
-                        .background(Capsule().fill(Color.iceBlue))
-                        .shadow(color: .iceBlue, radius: 5)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 12)
+                        .background(Color.iceBlue)
+                        .cornerRadius(30)
+                        .shadow(color: .iceBlue, radius: 6)
                     } else {
                         Button("Start") {
                             onComplete()
                         }
                         .foregroundColor(.white)
-                        .padding()
-                        .background(Capsule().fill(Color.iceBlue))
-                        .shadow(color: .iceBlue, radius: 5)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 12)
+                        .background(Color.iceBlue)
+                        .cornerRadius(30)
+                        .shadow(color: .iceBlue, radius: 6)
                     }
                 }
                 .padding(.horizontal)
